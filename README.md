@@ -1,35 +1,33 @@
-# Proyecto de Sistemas Operativos – Sesión 1: ¡Al Contenedor!
+# Proyecto de Sistemas Operativos – Sesión 2: El Sindicato de Contenedores
 
 ## Escenario
-Han sido contratados por **HotContainerz™**, una startup que quiere migrar su vieja aplicación monolítica a contenedores. Cuentan con un archivo de código fuente (`app.py`) junto con las librerías requeridas (`requirements.txt`), y su trabajo en este primer entregable consiste en contenerizar esta aplicación.
-
-> Se necesita poder hacer cambios en el código sin reiniciar todo, y el mensaje de bienvenida en la página web debe cambiar según el entorno.
+> A partir del ejercicio de la sesión anterior, ahora deberán construir la aplicación completa, agregando un backend y conectándolo a la base de datos
 
 ## Objetivos
-- Crear un `Dockerfile` desde cero para la aplicación
-- Crear un contenedor a partir del `Dockerfile`
-- La aplicación debe:
-  - Leer una variable de entorno desde el contenedor `WELCOME_MSG`  ---> Esto es lo que se mostrará en la página - ya la aplicación está configurada para esto
-  - Montar el código local con volúmenes (para recarga en caliente). Es decir, el contenedor debe ser capaz de leer archivos desde el sistema de archivos local. Cualquier cambio en el código fuente debería reflejarse automáticamente en el contenedor sin crear uno nuevo (pero para probar esta funcionalidad, se debe correr el comando `flask run --reload` dentro del contenedor)
-  - Ser accesible desde el host local en el puerto 5000
-
-> NOTA: No deben modificar el código fuente de la aplicación - realmente no es necesario para este proyecto
-
-- Pueden probar que funciona correctamente con el comando `curl` o directamente desde el navegador.
+- Crear un `docker-compose.yml` que incluya:
+  - Frontend (`app.py`) - a partir de un Dockerfile
+  - Backend (`backend.py`) - a partir de un Dockerfile
+  - MariaDB (pueden buscar la imagen desde Dockerhub)
+- El backend debe:
+  - Conectarse a MariaDB usando variables de entorno (`DB_HOST`, `DB_USER`, etc.)
+  - Exponerse en el puerto 5001
+- El frontend debe obtener datos desde el backend
 
 ## Archivos proporcionados
-- `app.py`
-- `requirements.txt`
+- `frontend.py`
+- `requirements.txt` del frontend
+- `backend.py`
+- `requirements.txt` del backend
+
+## Tips
+- Definan redes y variables de entorno en el archivo de Docker Compose
+- Utilicen los nombres de servicios como hostnames (`backend`, `mariadb`, etc.)
+- Comprueben conectividad entre servicios con `curl` y `docker-compose logs`, además de visualizar el frontend desde el navegador
 
 ## Entregables
-- `Dockerfile`
-- Comando(s) de construcción y ejecución
-- Evidencia de que la aplicación responde correctamente (pantallazo o curl)
-- Subir un archivo en formato .zip que contenga las evidencias recopiladas
+- `docker-compose.yml`
+- Evidencia de funcionamiento entre servicios (pantallazos, logs o curl)
 
 ## Documentación
 
-Si es la primera vez trabajando con contenedores, les recomiendo comenzar por este enlace:
-
-https://docs.docker.com/get-started/workshop/02_our_app/
-
+https://docs.docker.com/get-started/workshop/07_multi_container/
