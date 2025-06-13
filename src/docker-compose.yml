@@ -34,7 +34,7 @@ services:
     networks:
       - project2net
     volumes:
-      - ./init:/docker-entrypoint-initdb.d
+      - ../init:/docker-entrypoint-initdb.d
   backend:
     build:
       context: ./backend
