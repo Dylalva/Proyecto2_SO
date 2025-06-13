@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frondent
+      dockerfile: Dockerfile
+    container_name: project2_frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - project2net
+
+  database:
+    build:
+      context: ./Backend/dataBase/
+      dockerfile: Dockerfile
+    container_name: project2_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Project2_Prog4
+    ports:
+      - "3306:3306"
+    networks:
+      - project2net
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: project2_backend
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/Project2_Prog4
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    networks:
+      - project2net
+
+networks:
+  project2net:
+    driver: bridge
